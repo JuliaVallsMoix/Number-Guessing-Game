@@ -32,22 +32,16 @@ function updateRemainingTime() {
 
         // 3.2 Mostrar un mensaje que el tiempo ha finalizado e informar al usuario del numero secreto, cual era
 
-        displayMessage(`Game Over! Number was ${randomNumber}`);
+        displayMessage(`Game Over! Your time is over! Number was ${randomNumber}`);
 
         //   3.1 Bloquear el input para que no pueda escribir más. Pensad que está funcionalidad ya se da cuando te equivocas muchas veces, buscad en el código como lo hace el programador
-        userInput.value = '';
 
         // 3.3 Bonus: IMPEDIR que el usuario pueda hacer click en el botón
-        userInput.setAttribute('disabled', '');
-
-        p.classList.add('button');
-        p.innerHTML = `<h1 id="newGame">Start New Game</h1>`
-        startOver.appendChild(p);
-        playGame = false;
-        newGame();
+        endGame();
 
         // 3.4 Bonus Samané: cuando llegue a 0, debe dejar de restar. Buscar como se hace para limpiar un setInterval
         clearInterval(intervalRemainingTime);
+        submit.disabled = true;
 
     }
     
@@ -139,6 +133,7 @@ function newGame(){
         startOver.removeChild(p);
         playGame = true;
         remainingSeconds = 60;
+        intervalRemainingTime = setInterval(updateRemainingTime, 1000);
     })
 }
 //Allow to restart game with restart button
