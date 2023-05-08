@@ -6,10 +6,55 @@ const guessSlot = document.querySelector('.guesses');
 const remaining = document.querySelector('.lastResult');
 const startOver = document.querySelector('.resultParas');
 const lowOrHi = document.querySelector('.lowOrHi');
+const remainingTime = document.querySelector('#remaining-time');
 const p = document.createElement('p');
 let previousGuesses = [];
 let numGuesses = 1;
 let playGame = true;
+let remainingSeconds = 60;
+
+remainingTime.innerHTML = remainingSeconds;
+
+// Cada segundo (1000ms) quiero que ejecutes la función updateRemainingTime
+let intervalRemainingTime = setInterval(updateRemainingTime, 1000); 
+
+function updateRemainingTime() {
+    console.log('Me ejecuto cada segundo');
+    // 1. Decremntar la variable de estado remainingSeconds
+    remainingSeconds--
+
+    // 2. Actualizar el innerHTML de #remaining-time
+    remainingTime.innerHTML = remainingSeconds
+
+
+    // 3. Cuando llegue a 0 ha perdido
+    if (remainingSeconds === 0) {
+
+        // 3.2 Mostrar un mensaje que el tiempo ha finalizado e informar al usuario del numero secreto, cual era
+
+        displayMessage(`Game Over! Number was ${randomNumber}`);
+
+        //   3.1 Bloquear el input para que no pueda escribir más. Pensad que está funcionalidad ya se da cuando te equivocas muchas veces, buscad en el código como lo hace el programador
+        userInput.value = '';
+
+        // 3.3 Bonus: IMPEDIR que el usuario pueda hacer click en el botón
+        userInput.setAttribute('disabled', '');
+
+        p.classList.add('button');
+        p.innerHTML = `<h1 id="newGame">Start New Game</h1>`
+        startOver.appendChild(p);
+        playGame = false;
+        newGame();
+
+        // 3.4 Bonus Samané: cuando llegue a 0, debe dejar de restar. Buscar como se hace para limpiar un setInterval
+        clearInterval(intervalRemainingTime);
+
+    }
+    
+    
+    // 3.5 Bonus Aleix: en vez de que empiece a correr el tiempo nada más entrar, que haya un botón de Start
+    // 3.6 Bonus Dina: al poner el primer número, que empiece a contar el tiempo
+};
 
 if (playGame){
     subt.addEventListener('click', function(e){
@@ -93,6 +138,7 @@ function newGame(){
         userInput.removeAttribute('disabled');
         startOver.removeChild(p);
         playGame = true;
+        remainingSeconds = 60;
     })
 }
 //Allow to restart game with restart button
