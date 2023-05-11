@@ -17,13 +17,26 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
   if (inputValue > numeroCorrecto) {
     advice.innerHTML = 'Too high! Try again!'
+    advice.style.backgroundColor = 'red';
+    advice.style.color = '#fff';
+    advice.style.textAlign = 'center';
+    advice.style.width = '750px';
+
   } else if (inputValue < numeroCorrecto) {
     advice.innerHTML = 'Too low! Try again!'
+    advice.style.backgroundColor = 'red';
+    advice.style.color = '#fff';
+    advice.style.textAlign = 'center';
+    advice.style.width = '750px';
   } else if (inputValue === numeroCorrecto) {
     advice.innerHTML = '<p>You guessed correctly!</p> <p>Start New Game</p>'
-  }
+    advice.style.backgroundColor = 'green';
+    advice.style.color = '#fff';
+    advice.style.textAlign = 'center';
+    advice.style.width = '750px';
+  };
 
-  
+  document.querySelector('#guessField').value = '';
 
   console.log('input value: ', inputValue);
   
